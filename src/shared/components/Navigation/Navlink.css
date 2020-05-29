@@ -31,7 +31,8 @@
   background: #19be88;
   border: 1px solid #21b484;
   border-radius: 4px;
-  color: #292929;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .nav-links button {

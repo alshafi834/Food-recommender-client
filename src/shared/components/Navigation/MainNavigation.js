@@ -9,7 +9,7 @@ const MainNavigation = (props) => {
   return (
     <MainHeader>
       <h2 className="main-navigation__title">
-        <Link to="/">Mern Boilerplate</Link>
+        <Link to="/">Food Recommender</Link>
       </h2>
       <nav>
         <Navlinks />
