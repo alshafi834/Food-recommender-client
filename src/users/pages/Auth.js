@@ -154,7 +154,7 @@ const Auth = () => {
                 <TextField
                   fullWidth
                   id="height"
-                  label="Height"
+                  label="Height(cm)"
                   onChange={handleChange("height")}
                   value={values.height}
                   type="number"
@@ -168,7 +168,7 @@ const Auth = () => {
                 <TextField
                   fullWidth
                   id="weight"
-                  label="Weight"
+                  label="Weight(kg)"
                   onChange={handleChange("weight")}
                   value={values.weight}
                   type="number"

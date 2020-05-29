@@ -16,7 +16,7 @@ const Navlinks = () => {
       {auth.isLoggedIn && (
         <li>
           <NavLink to="/users" exact>
-            Users
+            User
           </NavLink>
         </li>
       )}
