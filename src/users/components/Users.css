@@ -1,3 +1,14 @@
 .food-recommender {
   display: flex;
 }
+
+.analyze-btn {
+  background-color: #21b484;
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import { Grid, FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
+import {
+  Grid,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Button,
+} from "@material-ui/core";
 
 import "./Users.css";
 
@@ -44,7 +50,7 @@ const Users = () => {
     const getUserProfile = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users",
+          `${process.env.REACT_APP_BACKEND_API_BASE}/users`,
           "POST",
           JSON.stringify({
             userID: auth.userId,
@@ -117,6 +123,7 @@ const Users = () => {
                   label="Blood Pressure"
                 />
               </FormGroup>
+              <button className="analyze-btn">Find Food</button>
             </Grid>
           </div>
         </Grid>

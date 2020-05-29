@@ -29,12 +29,11 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(values);
 
     if (signUpMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          `${process.env.REACT_APP_BACKEND_API_BASE}/users/signup`,
           "POST",
           JSON.stringify({
             username: values.uname,
@@ -57,7 +56,7 @@ const Auth = () => {
     } else {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          `${process.env.REACT_APP_BACKEND_API_BASE}/users/login`,
           "POST",
           JSON.stringify({
             email: values.email,
