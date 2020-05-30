@@ -6,7 +6,13 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Button,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableContainer,
+  Paper,
 } from "@material-ui/core";
 
 import "./Users.css";
@@ -18,12 +24,38 @@ const Users = () => {
   const [disease, setDisease] = useState({
     ckd: false,
     diabates: false,
-    bloodpressure: false,
+    dyslipidemia: false,
   });
+  const [selectedDisease, setSelectedDisease] = useState(null);
+
+  const [sgstdFoods, setSgstdFoods] = useState(null);
 
   const handleDiseaseChange = (event) => {
     setDisease({ ...disease, [event.target.name]: event.target.checked });
+
+    setSelectedDisease(event.target.value);
   };
+
+  const findFoodByDisease = async () => {
+    console.log(selectedDisease);
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_API_BASE}/users/findfood`,
+        "POST",
+        JSON.stringify({
+          disease: selectedDisease,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      setSgstdFoods(responseData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(sgstdFoods);
   //const [loadedUsers, setLoadedUsers] = useState();
 
   /* useEffect(() => {
@@ -98,6 +130,7 @@ const Users = () => {
                       onChange={handleDiseaseChange}
                       checked={disease.ckd}
                       name="ckd"
+                      value="CKD_Allowed"
                     />
                   }
                   label="CKD"
@@ -108,6 +141,7 @@ const Users = () => {
                       onChange={handleDiseaseChange}
                       checked={disease.diabates}
                       name="diabates"
+                      value="Diabetes_Type1_allowed"
                     />
                   }
                   label="Diabates"
@@ -116,16 +150,49 @@ const Users = () => {
                   control={
                     <Checkbox
                       onChange={handleDiseaseChange}
-                      checked={disease.bloodpressure}
-                      name="bloodpressure"
+                      checked={disease.dyslipidemia}
+                      name="dyslipidemia"
+                      value="Dyslipidemia_HighColestrol_Allowed"
                     />
                   }
                   label="Blood Pressure"
                 />
               </FormGroup>
-              <button className="analyze-btn">Find Food</button>
+              <button className="analyze-btn" onClick={findFoodByDisease}>
+                Find Food
+              </button>
             </Grid>
           </div>
+          <Grid item xs={8}>
+            {sgstdFoods ? (
+              <TableContainer component={Paper}>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Food</TableCell>
+                      <TableCell align="right">Calories</TableCell>
+                      <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                      <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {sgstdFoods.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell component="th" scope="row">
+                          {row.Food_Name}
+                        </TableCell>
+                        <TableCell align="right">{row.Calorie}</TableCell>
+                        <TableCell align="right">{row.Fat}</TableCell>
+                        <TableCell align="right">{row.Carbohydrate}</TableCell>
+                        <TableCell align="right">{row.Protein}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : null}
+          </Grid>
         </Grid>
       </Grid>
 
