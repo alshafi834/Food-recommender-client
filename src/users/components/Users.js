@@ -155,7 +155,7 @@ const Users = () => {
                       value="Dyslipidemia_HighColestrol_Allowed"
                     />
                   }
-                  label="Blood Pressure"
+                  label="Dyslipidemia"
                 />
               </FormGroup>
               <button className="analyze-btn" onClick={findFoodByDisease}>
