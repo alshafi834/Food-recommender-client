@@ -98,7 +98,6 @@ const Auth = () => {
 
         <form noValidate autoComplete="off" onSubmit={authSubmitHandler}>
           <Grid container spacing={3}>
-            {errorMsg}
             {signUpMode ? (
               <Grid item xs={12}>
                 <TextField
@@ -203,6 +202,7 @@ const Auth = () => {
               />
             </Grid>
             <Grid item xs={12}>
+              <p className="errorMsg">{errorMsg}</p>
               <Button variant="outlined" color="primary" type="submit">
                 {signUpMode ? "Sign Up" : "Login"}
               </Button>

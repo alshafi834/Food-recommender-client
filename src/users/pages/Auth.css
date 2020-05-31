@@ -30,3 +30,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.errorMsg {
+  color: rgb(218, 18, 18);
+}

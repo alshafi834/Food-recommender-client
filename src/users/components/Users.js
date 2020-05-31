@@ -29,6 +29,10 @@ const Users = () => {
   const [selectedDisease, setSelectedDisease] = useState(null);
 
   const [sgstdFoods, setSgstdFoods] = useState(null);
+  const [BMR, setBMR] = useState(null);
+  const [totalCalorie, setTotalCalorie] = useState(0);
+
+  const [selectedFoods, setSelectedFoods] = useState([]);
 
   const handleDiseaseChange = (event) => {
     setDisease({ ...disease, [event.target.name]: event.target.checked });
@@ -44,18 +48,19 @@ const Users = () => {
         "POST",
         JSON.stringify({
           disease: selectedDisease,
+          userID: auth.userId,
         }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
         }
       );
-      setSgstdFoods(responseData);
+      setSgstdFoods(responseData.suggestedFoods);
+      setBMR(responseData.bmr);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(sgstdFoods);
   //const [loadedUsers, setLoadedUsers] = useState();
 
   /* useEffect(() => {
@@ -100,6 +105,17 @@ const Users = () => {
     };
     getUserProfile();
   }, [sendRequest, auth.token, auth.userId]);
+
+  const calculateDiet = (event) => {
+    const foodToAdd = JSON.parse(event.target.value);
+    setTotalCalorie(totalCalorie + parseInt(foodToAdd.Calorie));
+
+    setSelectedFoods([...selectedFoods, foodToAdd]);
+  };
+
+  console.log(selectedFoods);
+  console.log(BMR);
+  console.log(totalCalorie);
 
   if (!userProfileInfo) return null;
 
@@ -163,36 +179,87 @@ const Users = () => {
               </button>
             </Grid>
           </div>
-          <Grid item xs={8}>
-            {sgstdFoods ? (
-              <TableContainer component={Paper}>
-                <Table aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Food</TableCell>
-                      <TableCell align="right">Calories</TableCell>
-                      <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                      <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {sgstdFoods.map((row) => (
-                      <TableRow key={row.name}>
-                        <TableCell component="th" scope="row">
-                          {row.Food_Name}
-                        </TableCell>
-                        <TableCell align="right">{row.Calorie}</TableCell>
-                        <TableCell align="right">{row.Fat}</TableCell>
-                        <TableCell align="right">{row.Carbohydrate}</TableCell>
-                        <TableCell align="right">{row.Protein}</TableCell>
+          <div className="tableContainer">
+            <Grid item xs={8}>
+              {sgstdFoods ? (
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>checkbox</TableCell>
+                        <TableCell>Food</TableCell>
+                        <TableCell align="right">Calories</TableCell>
+                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            ) : null}
-          </Grid>
+                    </TableHead>
+                    <TableBody>
+                      {sgstdFoods.map((row) => (
+                        <TableRow key={row.name}>
+                          <input
+                            type="checkbox"
+                            id={row.Food_Name}
+                            onChange={calculateDiet}
+                            name={row.Food_Name}
+                            value={JSON.stringify(row)}
+                          />
+                          <TableCell component="th" scope="row">
+                            {row.Food_Name}
+                          </TableCell>
+                          <TableCell align="right">{row.Calorie}</TableCell>
+                          <TableCell align="right">{row.Fat}</TableCell>
+                          <TableCell align="right">
+                            {row.Carbohydrate}
+                          </TableCell>
+                          <TableCell align="right">{row.Protein}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : null}
+            </Grid>
+            <Grid item xs={4}>
+              {selectedFoods.length > 0 ? (
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Food</TableCell>
+                        <TableCell align="right">BMR({BMR})</TableCell>
+                        {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                      <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {selectedFoods.map((row) => (
+                        <TableRow key={row.Food_Name}>
+                          <TableCell component="th" scope="row">
+                            {row.Food_Name}
+                          </TableCell>
+                          <TableCell align="right">{row.Calorie}</TableCell>
+                          {/* <TableCell align="right">{row.Fat}</TableCell>
+                        <TableCell align="right">{row.Carbohydrate}</TableCell>
+                        <TableCell align="right">{row.Protein}</TableCell> */}
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          Total
+                        </TableCell>
+                        <TableCell align="right">{totalCalorie}</TableCell>
+                        {/* <TableCell align="right">{row.Fat}</TableCell>
+                        <TableCell align="right">{row.Carbohydrate}</TableCell>
+                        <TableCell align="right">{row.Protein}</TableCell> */}
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              ) : null}
+            </Grid>
+          </div>
         </Grid>
       </Grid>
 

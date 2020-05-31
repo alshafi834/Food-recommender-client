@@ -12,3 +12,6 @@
   border-radius: 4px;
   cursor: pointer;
 }
+.tableContainer {
+  display: flex;
+}
