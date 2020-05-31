@@ -245,7 +245,12 @@ const Users = () => {
                         <TableCell align="right">{row.Protein}</TableCell> */}
                         </TableRow>
                       ))}
-                      <TableRow>
+                      <TableRow
+                        className={
+                          "totalValueRow " +
+                          (totalCalorie > BMR ? "alert" : null)
+                        }
+                      >
                         <TableCell component="th" scope="row">
                           Total
                         </TableCell>
