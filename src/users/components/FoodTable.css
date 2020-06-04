@@ -1,0 +1,24 @@
+.tableContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 35px;
+}
+.high-alert {
+  background-color: #dd224183 !important;
+}
+.low-alert {
+  background-color: #ec791a8c !important;
+}
+
+.high-warn {
+  color: #dd2241 !important;
+  font-weight: bold;
+}
+.low-warn {
+  color: #ec781a !important;
+  font-weight: bold;
+}
+.perfect-warn {
+  color: #21b484;
+  font-weight: bold;
+}

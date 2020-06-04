@@ -12,12 +12,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.tableContainer {
-  display: flex;
-}
+
 .totalValueRow {
   background-color: #21b484;
-}
-.alert {
-  background-color: #dd2242 !important;
 }

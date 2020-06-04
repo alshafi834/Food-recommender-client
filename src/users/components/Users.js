@@ -1,21 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import {
-  Grid,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
-} from "@material-ui/core";
+import { Grid, FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
 
 import "./Users.css";
+import FoodTable from "./FoodTable";
 
 const Users = () => {
   const auth = useContext(AuthContext);
@@ -30,9 +19,8 @@ const Users = () => {
 
   const [sgstdFoods, setSgstdFoods] = useState(null);
   const [BMR, setBMR] = useState(null);
-  const [totalCalorie, setTotalCalorie] = useState(0);
-
-  const [selectedFoods, setSelectedFoods] = useState([]);
+  //const [totalCalorie, setTotalCalorie] = useState(0);
+  //const [selectedFoods, setSelectedFoods] = useState([]);
 
   const handleDiseaseChange = (event) => {
     setDisease({ ...disease, [event.target.name]: event.target.checked });
@@ -106,23 +94,24 @@ const Users = () => {
     getUserProfile();
   }, [sendRequest, auth.token, auth.userId]);
 
-  const calculateDiet = (event) => {
+  /* const calculateDiet = (event) => {
     const foodToAdd = JSON.parse(event.target.value);
     setTotalCalorie(totalCalorie + parseInt(foodToAdd.Calorie));
 
     setSelectedFoods([...selectedFoods, foodToAdd]);
-  };
+  }; */
 
-  console.log(selectedFoods);
+  /* console.log(selectedFoods);
   console.log(BMR);
-  console.log(totalCalorie);
+  console.log(totalCalorie); */
+  console.log(sgstdFoods);
 
   if (!userProfileInfo) return null;
 
   return (
     <div>
       <Grid container justify="center" spacing={5}>
-        <Grid item xs={10}>
+        <Grid item xs={11}>
           <h3>
             Hello {userProfileInfo.username}, welcome to food recommender. Let's
             find your food!
@@ -179,9 +168,9 @@ const Users = () => {
               </button>
             </Grid>
           </div>
-          <div className="tableContainer">
-            <Grid item xs={8}>
-              {sgstdFoods ? (
+          <div>
+            <FoodTable sgstdFoods={sgstdFoods} BMR={BMR} />
+            {/* {sgstdFoods ? (
                 <TableContainer component={Paper}>
                   <Table aria-label="simple table">
                     <TableHead>
@@ -218,52 +207,7 @@ const Users = () => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-              ) : null}
-            </Grid>
-            <Grid item xs={4}>
-              {selectedFoods.length > 0 ? (
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Food</TableCell>
-                        <TableCell align="right">BMR({BMR})</TableCell>
-                        {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                      <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {selectedFoods.map((row) => (
-                        <TableRow key={row.Food_Name}>
-                          <TableCell component="th" scope="row">
-                            {row.Food_Name}
-                          </TableCell>
-                          <TableCell align="right">{row.Calorie}</TableCell>
-                          {/* <TableCell align="right">{row.Fat}</TableCell>
-                        <TableCell align="right">{row.Carbohydrate}</TableCell>
-                        <TableCell align="right">{row.Protein}</TableCell> */}
-                        </TableRow>
-                      ))}
-                      <TableRow
-                        className={
-                          "totalValueRow " +
-                          (totalCalorie > BMR ? "alert" : null)
-                        }
-                      >
-                        <TableCell component="th" scope="row">
-                          Total
-                        </TableCell>
-                        <TableCell align="right">{totalCalorie}</TableCell>
-                        {/* <TableCell align="right">{row.Fat}</TableCell>
-                        <TableCell align="right">{row.Carbohydrate}</TableCell>
-                        <TableCell align="right">{row.Protein}</TableCell> */}
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : null}
-            </Grid>
+              ) : null} */}
           </div>
         </Grid>
       </Grid>
