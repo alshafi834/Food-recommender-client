@@ -1,7 +1,23 @@
 import React from "react";
+import banner2 from "../../images/home2.png";
+import { NavLink } from "react-router-dom";
+
+import "./Home.css";
 
 const Home = () => {
-  return <h3>Home page</h3>;
+  return (
+    <div className="home-container">
+      <div className="hero-left">
+        <img src={banner2} className="banner-img" alt="" />
+      </div>
+      <div className="hero-right">
+        <p>Find medically accurate food according to disease</p>
+        <button>
+          <NavLink to="/auth">Get started</NavLink>
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Home;

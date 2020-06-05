@@ -1,0 +1,36 @@
+.home-container {
+  display: flex;
+  height: 91vh;
+  background: #e4fff6;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.banner-img {
+  margin: 0 0 0 100px;
+  width: 500px;
+}
+
+.hero-right {
+  margin-right: 100px;
+  text-align: right;
+  margin-left: 100px;
+}
+.hero-right p {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero-right button {
+  background-color: #19be88;
+  padding: 15px 22px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+}
+.hero-right a {
+  border: 1px solid transparent;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+}
