@@ -13,8 +13,8 @@ const Home = () => {
         </div>
         <div className="hero-right">
           <p>
-            Get the medically accurate food<br></br> suggestion according to
-            your disease
+            Get the medically accurate<br></br> food suggestion according
+            <br></br> to your disease
           </p>
           <button>
             <NavLink to="/auth">Get started</NavLink>
