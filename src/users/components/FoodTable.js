@@ -34,7 +34,12 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
   }
 
   const headCells = [
-    { id: "name", numeric: false, disablePadding: true, label: "Food" },
+    {
+      id: "name",
+      numeric: false,
+      disablePadding: true,
+      label: "Recommended Foods",
+    },
     { id: "calories", numeric: true, disablePadding: false, label: "Calories" },
     { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
     { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
