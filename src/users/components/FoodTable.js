@@ -60,7 +60,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
     };
 
     return (
-      <TableHead>
+      <TableHead className="table-head">
         <TableRow>
           {
             <TableCell padding="checkbox">
@@ -250,8 +250,8 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
         {selected.length > 0 ? (
           <>
             <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead>
+              <Table aria-label="simple table" size="small">
+                <TableHead className="table-head">
                   <TableRow>
                     <TableCell>Food</TableCell>
                     <TableCell align="right">BMR({BMR}±50)</TableCell>
