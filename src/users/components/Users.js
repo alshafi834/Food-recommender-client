@@ -110,7 +110,7 @@ const Users = () => {
 
   return (
     <div>
-      <Grid container justify="center" spacing={5}>
+      <Grid container justify="center" spacing={0}>
         <Grid item xs={11}>
           <h3>
             Hello {userProfileInfo.username}, welcome to food recommender. Let's

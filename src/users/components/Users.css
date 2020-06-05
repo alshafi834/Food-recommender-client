@@ -1,6 +1,9 @@
 .food-recommender {
   display: flex;
 }
+h3 {
+  margin-top: 40px;
+}
 
 .analyze-btn {
   background-color: #21b484;
