@@ -1,7 +1,6 @@
 .tableContainer {
   display: flex;
   justify-content: space-between;
-  margin-top: 35px;
 }
 .high-alert {
   background-color: #dd224183 !important;

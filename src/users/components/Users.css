@@ -1,6 +1,9 @@
 .food-recommender {
   display: flex;
 }
+.food-result {
+  margin-top: 35px;
+}
 h3 {
   margin-top: 40px;
 }

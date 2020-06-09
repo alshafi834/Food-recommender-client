@@ -1,10 +1,56 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import { Grid, FormGroup, FormControlLabel, Checkbox } from "@material-ui/core";
+import {
+  Grid,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Tabs,
+  AppBar,
+  Tab,
+  Typography,
+  Box,
+} from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 import "./Users.css";
 import FoodTable from "./FoodTable";
+import AvoidFoodTable from "./AvoidFoodTable";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
 
 const Users = () => {
   const auth = useContext(AuthContext);
@@ -18,9 +64,13 @@ const Users = () => {
   const [selectedDisease, setSelectedDisease] = useState(null);
 
   const [sgstdFoods, setSgstdFoods] = useState(null);
+  const [avoidableFoods, setAvoidableFoods] = useState(null);
   const [BMR, setBMR] = useState(null);
   //const [totalCalorie, setTotalCalorie] = useState(0);
   //const [selectedFoods, setSelectedFoods] = useState([]);
+
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
 
   const handleDiseaseChange = (event) => {
     setDisease({ ...disease, [event.target.name]: event.target.checked });
@@ -44,6 +94,7 @@ const Users = () => {
         }
       );
       setSgstdFoods(responseData.suggestedFoods);
+      setAvoidableFoods(responseData.avoidedFoods);
       setBMR(responseData.bmr);
     } catch (error) {
       console.log(error);
@@ -104,6 +155,11 @@ const Users = () => {
   /* console.log(selectedFoods);
   console.log(BMR);
   console.log(totalCalorie); */
+
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue);
+  };
+
   console.log(sgstdFoods);
 
   if (!userProfileInfo) return null;
@@ -169,45 +225,29 @@ const Users = () => {
             </Grid>
           </div>
           <div>
-            <FoodTable sgstdFoods={sgstdFoods} BMR={BMR} />
-            {/* {sgstdFoods ? (
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>checkbox</TableCell>
-                        <TableCell>Food</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {sgstdFoods.map((row) => (
-                        <TableRow key={row.name}>
-                          <input
-                            type="checkbox"
-                            id={row.Food_Name}
-                            onChange={calculateDiet}
-                            name={row.Food_Name}
-                            value={JSON.stringify(row)}
-                          />
-                          <TableCell component="th" scope="row">
-                            {row.Food_Name}
-                          </TableCell>
-                          <TableCell align="right">{row.Calorie}</TableCell>
-                          <TableCell align="right">{row.Fat}</TableCell>
-                          <TableCell align="right">
-                            {row.Carbohydrate}
-                          </TableCell>
-                          <TableCell align="right">{row.Protein}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : null} */}
+            {sgstdFoods ? (
+              <div className="food-result">
+                <AppBar position="static" color="default">
+                  <Tabs
+                    value={value}
+                    onChange={handleChangeTab}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    variant="fullWidth"
+                    aria-label="full width tabs example"
+                  >
+                    <Tab label="Recommended Food" {...a11yProps(0)} />
+                    <Tab label="Foods to avoid" {...a11yProps(1)} />
+                  </Tabs>
+                </AppBar>
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                  <FoodTable sgstdFoods={sgstdFoods} BMR={BMR} />
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                  <AvoidFoodTable avoidableFoods={avoidableFoods} />
+                </TabPanel>
+              </div>
+            ) : null}
           </div>
         </Grid>
       </Grid>
