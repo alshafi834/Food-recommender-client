@@ -230,7 +230,7 @@ const Users = () => {
                 />
               </FormGroup> */}
               <FormControl className="dropbox-select">
-                <InputLabel id="select-disease">Age</InputLabel>
+                <InputLabel id="select-disease">Select Disease</InputLabel>
                 <Select
                   labelId="select-disease"
                   id="demo-simple-select"
