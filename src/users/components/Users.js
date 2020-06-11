@@ -11,6 +11,10 @@ import {
   Tab,
   Typography,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -75,6 +79,12 @@ const Users = () => {
   const handleDiseaseChange = (event) => {
     setDisease({ ...disease, [event.target.name]: event.target.checked });
 
+    setSelectedDisease(event.target.value);
+  };
+
+  //const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
     setSelectedDisease(event.target.value);
   };
 
@@ -184,7 +194,7 @@ const Users = () => {
             </Grid>
             <Grid item xs={6}>
               <p>Which diseases you are suffering with?</p>
-              <FormGroup>
+              {/* <FormGroup>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -218,7 +228,23 @@ const Users = () => {
                   }
                   label="Dyslipidemia"
                 />
-              </FormGroup>
+              </FormGroup> */}
+              <FormControl className="dropbox-select">
+                <InputLabel id="select-disease">Age</InputLabel>
+                <Select
+                  labelId="select-disease"
+                  id="demo-simple-select"
+                  value={selectedDisease}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="CKD_Allowed">CKD</MenuItem>
+                  <MenuItem value="Diabetes_Type1_allowed">Diabates</MenuItem>
+                  <MenuItem value="Dyslipidemia_HighColestrol_Allowed">
+                    Dyslipidemia
+                  </MenuItem>
+                </Select>
+              </FormControl>{" "}
+              <br></br>
               <button className="analyze-btn" onClick={findFoodByDisease}>
                 Find Food
               </button>

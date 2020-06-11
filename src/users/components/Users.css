@@ -8,6 +8,10 @@ h3 {
   margin-top: 40px;
 }
 
+.dropbox-select {
+  min-width: 220px !important;
+  margin-bottom: 30px !important;
+}
 .analyze-btn {
   background-color: #21b484;
   color: white;
