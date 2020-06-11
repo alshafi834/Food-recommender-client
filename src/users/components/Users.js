@@ -3,9 +3,9 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import {
   Grid,
-  FormGroup,
+  RadioGroup,
   FormControlLabel,
-  Checkbox,
+  Radio,
   Tabs,
   AppBar,
   Tab,
@@ -76,16 +76,31 @@ const Users = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
-  const handleDiseaseChange = (event) => {
-    setDisease({ ...disease, [event.target.name]: event.target.checked });
+  const [subDisease, setSubDisease] = useState(null);
+  const [finalDisease, setFinalDisease] = useState([]);
 
-    setSelectedDisease(event.target.value);
+  const handleDiseaseChange = (event) => {
+    //setDisease({ ...disease, [event.target.name]: event.target.checked });
+    setSubDisease(event.target.value);
+    //setSelectedDisease(event.target.value);
   };
 
   //const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setSelectedDisease(event.target.value);
+    setSubDisease(null);
+  };
+
+  const desieaseList = {
+    ckd: ["CKD"],
+    diabates: ["Diabetes Type1", "Diabetes Type2"],
+    dyslipidemia: ["Dyslipidemia HighColestrol", "Dyslipidemia LowColestrol"],
+  };
+
+  const addDisease = () => {
+    setFinalDisease([...finalDisease, subDisease]);
+    setSelectedDisease(null);
   };
 
   const findFoodByDisease = async () => {
@@ -171,6 +186,7 @@ const Users = () => {
   };
 
   console.log(sgstdFoods);
+  console.log(finalDisease);
 
   if (!userProfileInfo) return null;
 
@@ -183,7 +199,7 @@ const Users = () => {
             find your food!
           </h3>
           <div className="food-recommender">
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <p>
                 <u>User Details:</u>
               </p>
@@ -192,8 +208,12 @@ const Users = () => {
               <p>height: {userProfileInfo.height}</p>
               <p>weight: {userProfileInfo.weight}</p>
             </Grid>
-            <Grid item xs={6}>
-              <p>Which diseases you are suffering with?</p>
+            <Grid item xs={4}>
+              <p>
+                {finalDisease.length < 1
+                  ? "Which diseases you are suffering with?"
+                  : "Are you suffering with more disease?"}{" "}
+              </p>
               {/* <FormGroup>
                 <FormControlLabel
                   control={
@@ -237,17 +257,51 @@ const Users = () => {
                   value={selectedDisease}
                   onChange={handleChange}
                 >
-                  <MenuItem value="CKD_Allowed">CKD</MenuItem>
-                  <MenuItem value="Diabetes_Type1_allowed">Diabates</MenuItem>
-                  <MenuItem value="Dyslipidemia_HighColestrol_Allowed">
-                    Dyslipidemia
-                  </MenuItem>
+                  <MenuItem value="ckd">CKD</MenuItem>
+                  <MenuItem value="diabates">Diabates</MenuItem>
+                  <MenuItem value="dyslipidemia">Dyslipidemia</MenuItem>
                 </Select>
               </FormControl>{" "}
               <br></br>
-              <button className="analyze-btn" onClick={findFoodByDisease}>
-                Find Food
+              {/* {selectedDisease ? desieaseList[selectedDisease][0] : null} */}
+              {selectedDisease ? (
+                <RadioGroup
+                  aria-label="sub-disease"
+                  name="sub-disease"
+                  value={subDisease}
+                  onChange={handleDiseaseChange}
+                  size="small"
+                >
+                  {desieaseList[selectedDisease].map((dss) => {
+                    return (
+                      <FormControlLabel
+                        value={dss}
+                        control={<Radio color="primary" />}
+                        label={dss}
+                      />
+                    );
+                  })}
+                </RadioGroup>
+              ) : null}
+              <button
+                className="analyze-btn"
+                onClick={addDisease}
+                disabled={!selectedDisease || !subDisease}
+              >
+                Add Disease
               </button>
+            </Grid>
+            <Grid item xs={4}>
+              {finalDisease.length > 0 ? (
+                <div>
+                  <ul className="final-disease-list">
+                    {finalDisease.map((fds) => {
+                      return <li className="final-diseases">{fds}</li>;
+                    })}
+                  </ul>
+                  <button className="analyze-btn">Find Foods</button>
+                </div>
+              ) : null}
             </Grid>
           </div>
           <div>
