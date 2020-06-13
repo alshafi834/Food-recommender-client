@@ -60,18 +60,11 @@ const Users = () => {
   const auth = useContext(AuthContext);
   const { sendRequest } = useHttpClient();
   const [userProfileInfo, setUserProfileInfo] = useState(null);
-  const [disease, setDisease] = useState({
-    ckd: false,
-    diabates: false,
-    dyslipidemia: false,
-  });
-  const [selectedDisease, setSelectedDisease] = useState(null);
+  const [selectedDisease, setSelectedDisease] = useState("");
 
   const [sgstdFoods, setSgstdFoods] = useState(null);
   const [avoidableFoods, setAvoidableFoods] = useState(null);
   const [BMR, setBMR] = useState(null);
-  //const [totalCalorie, setTotalCalorie] = useState(0);
-  //const [selectedFoods, setSelectedFoods] = useState([]);
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -80,12 +73,8 @@ const Users = () => {
   const [finalDisease, setFinalDisease] = useState([]);
 
   const handleDiseaseChange = (event) => {
-    //setDisease({ ...disease, [event.target.name]: event.target.checked });
     setSubDisease(event.target.value);
-    //setSelectedDisease(event.target.value);
   };
-
-  //const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setSelectedDisease(event.target.value);
@@ -93,14 +82,29 @@ const Users = () => {
   };
 
   const desieaseList = {
-    ckd: ["CKD"],
-    diabates: ["Diabetes Type1", "Diabetes Type2"],
-    dyslipidemia: ["Dyslipidemia HighColestrol", "Dyslipidemia LowColestrol"],
+    CKD: ["CKD"],
+    Diabates: ["Diabetes_Type1", "Diabetes_Type2"],
+    Dyslipidemia: ["Dyslipidemia_HighColestrol", "Dyslipidemia_LowColestrol"],
   };
+  let [diseaseDropDown, setDiseaseDropDown] = useState([
+    "CKD",
+    "Diabates",
+    "Dyslipidemia",
+  ]);
 
   const addDisease = () => {
     setFinalDisease([...finalDisease, subDisease]);
-    setSelectedDisease(null);
+    popDisease(selectedDisease);
+    setSelectedDisease("");
+  };
+
+  const popDisease = (sds) => {
+    for (let i = 0; i < diseaseDropDown.length; i++) {
+      if (diseaseDropDown[i] === sds) {
+        diseaseDropDown.splice(i, 1);
+        setDiseaseDropDown(diseaseDropDown);
+      }
+    }
   };
 
   const findFoodByDisease = async () => {
@@ -110,7 +114,7 @@ const Users = () => {
         `${process.env.REACT_APP_BACKEND_API_BASE}/users/findfood`,
         "POST",
         JSON.stringify({
-          disease: selectedDisease,
+          disease: finalDisease,
           userID: auth.userId,
         }),
         {
@@ -125,27 +129,6 @@ const Users = () => {
       console.log(error);
     }
   };
-  //const [loadedUsers, setLoadedUsers] = useState();
-
-  /* useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const responseData = await sendRequest(
-          "http://localhost:5000/api/users",
-          "GET",
-          null,
-          {
-            Authorization: "Bearer " + auth.token,
-          }
-        );
-
-        setLoadedUsers(responseData.users);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUsers();
-  }, [sendRequest, auth.token]); */
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -170,23 +153,12 @@ const Users = () => {
     getUserProfile();
   }, [sendRequest, auth.token, auth.userId]);
 
-  /* const calculateDiet = (event) => {
-    const foodToAdd = JSON.parse(event.target.value);
-    setTotalCalorie(totalCalorie + parseInt(foodToAdd.Calorie));
-
-    setSelectedFoods([...selectedFoods, foodToAdd]);
-  }; */
-
-  /* console.log(selectedFoods);
-  console.log(BMR);
-  console.log(totalCalorie); */
-
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
   };
 
   console.log(sgstdFoods);
-  console.log(finalDisease);
+  //console.log(finalDisease);
 
   if (!userProfileInfo) return null;
 
@@ -214,41 +186,6 @@ const Users = () => {
                   ? "Which diseases you are suffering with?"
                   : "Are you suffering with more disease?"}{" "}
               </p>
-              {/* <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={handleDiseaseChange}
-                      checked={disease.ckd}
-                      name="ckd"
-                      value="CKD_Allowed"
-                    />
-                  }
-                  label="CKD"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={handleDiseaseChange}
-                      checked={disease.diabates}
-                      name="diabates"
-                      value="Diabetes_Type1_allowed"
-                    />
-                  }
-                  label="Diabates"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={handleDiseaseChange}
-                      checked={disease.dyslipidemia}
-                      name="dyslipidemia"
-                      value="Dyslipidemia_HighColestrol_Allowed"
-                    />
-                  }
-                  label="Dyslipidemia"
-                />
-              </FormGroup> */}
               <FormControl className="dropbox-select">
                 <InputLabel id="select-disease">Select Disease</InputLabel>
                 <Select
@@ -257,13 +194,16 @@ const Users = () => {
                   value={selectedDisease}
                   onChange={handleChange}
                 >
-                  <MenuItem value="ckd">CKD</MenuItem>
-                  <MenuItem value="diabates">Diabates</MenuItem>
-                  <MenuItem value="dyslipidemia">Dyslipidemia</MenuItem>
+                  {diseaseDropDown.map((ddd) => {
+                    return (
+                      <MenuItem value={ddd} key={ddd}>
+                        {ddd}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>{" "}
               <br></br>
-              {/* {selectedDisease ? desieaseList[selectedDisease][0] : null} */}
               {selectedDisease ? (
                 <RadioGroup
                   aria-label="sub-disease"
@@ -276,6 +216,7 @@ const Users = () => {
                     return (
                       <FormControlLabel
                         value={dss}
+                        key={dss}
                         control={<Radio color="primary" />}
                         label={dss}
                       />
@@ -296,10 +237,16 @@ const Users = () => {
                 <div>
                   <ul className="final-disease-list">
                     {finalDisease.map((fds) => {
-                      return <li className="final-diseases">{fds}</li>;
+                      return (
+                        <li className="final-diseases" key={fds}>
+                          {fds}
+                        </li>
+                      );
                     })}
                   </ul>
-                  <button className="analyze-btn">Find Foods</button>
+                  <button className="analyze-btn" onClick={findFoodByDisease}>
+                    Find Foods
+                  </button>
                 </div>
               ) : null}
             </Grid>
@@ -331,14 +278,6 @@ const Users = () => {
           </div>
         </Grid>
       </Grid>
-
-      {/* {loadedUsers && (
-        <ul>
-          {loadedUsers.map((user) => {
-            return <li key={user.id}>{user.username}</li>;
-          })}
-        </ul>
-      )} */}
     </div>
   );
 };

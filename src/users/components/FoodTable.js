@@ -260,9 +260,6 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
                   <TableRow>
                     <TableCell>Food</TableCell>
                     <TableCell align="right">BMR({BMR}±50)</TableCell>
-                    {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                      <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                      <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -272,9 +269,6 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
                         {row.Food_Name}
                       </TableCell>
                       <TableCell align="right">{row.Calorie}</TableCell>
-                      {/* <TableCell align="right">{row.Fat}</TableCell>
-                        <TableCell align="right">{row.Carbohydrate}</TableCell>
-                        <TableCell align="right">{row.Protein}</TableCell> */}
                     </TableRow>
                   ))}
                   <TableRow
@@ -291,9 +285,6 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
                       Total
                     </TableCell>
                     <TableCell align="right">{totalCalorie}</TableCell>
-                    {/* <TableCell align="right">{row.Fat}</TableCell>
-                        <TableCell align="right">{row.Carbohydrate}</TableCell>
-                        <TableCell align="right">{row.Protein}</TableCell> */}
                   </TableRow>
                 </TableBody>
               </Table>
