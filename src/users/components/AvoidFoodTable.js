@@ -20,6 +20,7 @@ const AvoidFoodTable = ({ avoidableFoods }) => {
               <TableRow>
                 <TableCell>Food</TableCell>
                 <TableCell align="right">Calories</TableCell>
+                <TableCell align="right">Category</TableCell>
                 <TableCell align="right">Fat&nbsp;(g)</TableCell>
                 <TableCell align="right">Carbs&nbsp;(g)</TableCell>
                 <TableCell align="right">Protein&nbsp;(g)</TableCell>
@@ -32,6 +33,7 @@ const AvoidFoodTable = ({ avoidableFoods }) => {
                     {row.Food_Name}
                   </TableCell>
                   <TableCell align="right">{row.Calorie}</TableCell>
+                  <TableCell align="right">{row.Category}</TableCell>
                   <TableCell align="right">{row.Fat}</TableCell>
                   <TableCell align="right">{row.Carbohydrate}</TableCell>
                   <TableCell align="right">{row.Protein}</TableCell>

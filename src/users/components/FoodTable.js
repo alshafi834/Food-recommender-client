@@ -40,6 +40,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
       disablePadding: true,
       label: "Recommended Foods",
     },
+    { id: "category", numeric: false, disablePadding: true, label: "Category" },
     { id: "calories", numeric: true, disablePadding: false, label: "Calories" },
     { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
     { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
@@ -123,7 +124,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
   }
 
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("Category");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -228,6 +229,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
                           >
                             {row.Food_Name}
                           </TableCell>
+                          <TableCell align="right">{row.Category}</TableCell>
                           <TableCell align="right">{row.Calorie}</TableCell>
                           <TableCell align="right">{row.Fat}</TableCell>
                           <TableCell align="right">
