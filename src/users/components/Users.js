@@ -77,8 +77,13 @@ const Users = () => {
   };
 
   const handleChange = (event) => {
-    setSelectedDisease(event.target.value);
-    setSubDisease(null);
+    if (desieaseList[event.target.value].length > 1) {
+      setSelectedDisease(event.target.value);
+      setSubDisease(null);
+    } else {
+      setSelectedDisease(event.target.value);
+      setSubDisease(event.target.value);
+    }
   };
 
   const desieaseList = {
@@ -204,7 +209,7 @@ const Users = () => {
                 </Select>
               </FormControl>{" "}
               <br></br>
-              {selectedDisease ? (
+              {selectedDisease && desieaseList[selectedDisease].length > 1 ? (
                 <RadioGroup
                   aria-label="sub-disease"
                   name="sub-disease"
