@@ -25,7 +25,8 @@ const Auth = () => {
   });
   const [signUpMode, setSignUpMode] = React.useState(true);
 
-  const { isLoading, errorMsg, sendRequest, clearError } = useHttpClient();
+  /* const { isLoading, errorMsg, sendRequest, clearError } = useHttpClient(); */
+  const { errorMsg, sendRequest } = useHttpClient();
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
