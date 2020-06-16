@@ -15,6 +15,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  LinearProgress,
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -58,7 +59,7 @@ function a11yProps(index) {
 
 const Users = () => {
   const auth = useContext(AuthContext);
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, isLoading } = useHttpClient();
   const [userProfileInfo, setUserProfileInfo] = useState(null);
   const [selectedDisease, setSelectedDisease] = useState("");
 
@@ -258,13 +259,14 @@ const Users = () => {
                     })}
                   </ul>
                   <button className="analyze-btn" onClick={findFoodByDisease}>
-                    Find Foods
+                    {isLoading ? "Finding your foods..." : "Find Foods"}
                   </button>
                 </div>
               ) : null}
             </Grid>
           </div>
           <div>
+            {isLoading ? <LinearProgress className="loading" /> : null}
             {sgstdFoods ? (
               <div className="food-result">
                 <AppBar position="static" color="default">

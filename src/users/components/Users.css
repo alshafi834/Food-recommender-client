@@ -41,3 +41,7 @@ button.analyze-btn:disabled {
 .totalValueRow {
   background-color: #21b484;
 }
+
+.loading {
+  margin-top: 25px;
+}
