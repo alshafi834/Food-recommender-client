@@ -86,6 +86,14 @@ const Users = () => {
     }
   };
 
+  const diseaseDisplayName = {
+    CKD: "CKD",
+    Diabetes_Type1: "Diabetes - Type 1",
+    Diabetes_Type2: "Diabetes - Type 2",
+    Dyslipidemia_HighColestrol: "Dyslipidemia with Hign Colostrol",
+    Dyslipidemia_LowColestrol: "Dyslipidemia with Low Colostrol",
+  };
+
   const desieaseList = {
     CKD: ["CKD"],
     Diabates: ["Diabetes_Type1", "Diabetes_Type2"],
@@ -223,7 +231,7 @@ const Users = () => {
                         value={dss}
                         key={dss}
                         control={<Radio color="primary" />}
-                        label={dss}
+                        label={diseaseDisplayName[dss]}
                       />
                     );
                   })}
@@ -244,7 +252,7 @@ const Users = () => {
                     {finalDisease.map((fds) => {
                       return (
                         <li className="final-diseases" key={fds}>
-                          {fds}
+                          {diseaseDisplayName[fds]}
                         </li>
                       );
                     })}
