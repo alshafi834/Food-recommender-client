@@ -12,9 +12,13 @@ const Home = () => {
           <img src={banner2} className="banner-img" alt="" />
         </div>
         <div className="hero-right">
-          <p>
-            Get the medically accurate<br></br> food suggestion according
-            <br></br> to your disease
+          <p className="hero-right-title">
+            Find medically accurate
+            <br></br>foods based on your disease
+          </p>
+          <p className="hero-right-desc">
+            We cross check your all disease and find the most medically accurate
+            foods for you
           </p>
           <button>
             <NavLink to="/auth">Get started</NavLink>

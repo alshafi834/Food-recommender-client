@@ -23,9 +23,13 @@
   width: 50%;
   text-align: right;
 }
-.hero-right p {
+.hero-right p.hero-right-title {
   font-size: 3vw;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
+}
+.hero-right p.hero-right-desc {
+  font-size: 1.5vw;
+  margin-top: 2px;
 }
 
 .hero-right button {
