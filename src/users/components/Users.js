@@ -90,14 +90,14 @@ const Users = () => {
   const diseaseDisplayName = {
     CKD: "CKD",
     Diabetes_Type1: "Diabetes - Type 1",
-    Diabetes_Type2: "Diabetes - Type 2",
+    Diabates_Type2: "Diabates - Type 2",
     Dyslipidemia_HighColestrol: "Dyslipidemia with Hign Colostrol",
     Dyslipidemia_LowColestrol: "Dyslipidemia with Low Colostrol",
   };
 
   const desieaseList = {
     CKD: ["CKD"],
-    Diabates: ["Diabetes_Type1", "Diabetes_Type2"],
+    Diabates: ["Diabetes_Type1", "Diabates_Type2"],
     Dyslipidemia: ["Dyslipidemia_HighColestrol", "Dyslipidemia_LowColestrol"],
   };
   let [diseaseDropDown, setDiseaseDropDown] = useState([

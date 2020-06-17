@@ -11,6 +11,8 @@ import Auth from "./users/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import Users from "./users/components/Users";
+import Profile from "./profile/pages/Profile";
+import Myfood from "./myfood/pages/Myfood";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -19,13 +21,19 @@ const App = () => {
   if (token) {
     routes = (
       <Switch>
-        <Route path="/" exact>
+        {/* <Route path="/" exact>
           <Home />
-        </Route>{" "}
-        <Route path="/users">
+        </Route>*/}
+        <Route path="/dashboard" exact>
           <Users />
         </Route>
-        <Redirect to="/users" />
+        <Route path="/myfoods" exact>
+          <Myfood />
+        </Route>
+        <Route path="/profile" exact>
+          <Profile />
+        </Route>
+        <Redirect to="/dashboard" />
       </Switch>
     );
   } else {

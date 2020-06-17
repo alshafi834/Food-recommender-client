@@ -301,10 +301,15 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
                 Select some more foods to reach the BMR
               </p>
             ) : (
-              <p className="perfect-warn">Perfect diet for you</p>
+              <>
+                <p className="perfect-warn">Perfect diet for you</p>
+                <button class="ft-btn">Save diet table</button>
+              </>
             )}
           </>
-        ) : null}
+        ) : (
+          <p>Select some food to make your own diet table!</p>
+        )}
       </Grid>
     </div>
   );
