@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Checkbox,
   Table,
@@ -13,6 +13,8 @@ import {
   Grid,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
 import "./FoodTable.css";
 
@@ -130,6 +132,9 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [totalCalorie, setTotalCalorie] = React.useState(0);
 
+  const { sendRequest } = useHttpClient();
+  const auth = useContext(AuthContext);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -177,6 +182,28 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const saveDietTable = async () => {
+    console.log(selected);
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_API_BASE}/users/savediet`,
+        "POST",
+        JSON.stringify({
+          userID: auth.userId,
+          diettable: selected,
+          total_cal: totalCalorie,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      console.log(responseData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -303,7 +330,9 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
             ) : (
               <>
                 <p className="perfect-warn">Perfect diet for you</p>
-                <button class="ft-btn">Save diet table</button>
+                <button class="ft-btn" onClick={saveDietTable}>
+                  Save diet table
+                </button>
               </>
             )}
           </>
