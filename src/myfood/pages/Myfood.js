@@ -55,9 +55,9 @@ const Myfood = () => {
           {dietTable ? (
             <>
               <h3>Your saved food tables - (in progress)</h3>
-              {dietTable.map((dbl, index) => {
+              {dietTable.reverse().map((dbl, index) => {
                 return (
-                  <ExpansionPanel key={index}>
+                  <ExpansionPanel key={index} defaultExpanded={index === 0}>
                     <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"

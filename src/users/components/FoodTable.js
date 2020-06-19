@@ -15,6 +15,7 @@ import {
 import PropTypes from "prop-types";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import { useHistory } from "react-router-dom";
 
 import "./FoodTable.css";
 
@@ -135,6 +136,8 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
   const { sendRequest } = useHttpClient();
   const auth = useContext(AuthContext);
 
+  const history = useHistory();
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -201,6 +204,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
         }
       );
       console.log(responseData);
+      history.push("/myfoods");
     } catch (error) {
       console.log(error);
     }
