@@ -54,7 +54,7 @@ const Myfood = () => {
         <Grid item xs={11}>
           {dietTable ? (
             <>
-              <h3>Your saved food tables - (in progress)</h3>
+              <h3>Your food tables</h3>
               {dietTable.reverse().map((dbl, index) => {
                 return (
                   <ExpansionPanel key={index} defaultExpanded={index === 0}>

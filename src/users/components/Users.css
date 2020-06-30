@@ -1,6 +1,10 @@
 .food-recommender {
   display: flex;
 }
+.food-recommender a {
+  color: #2d90e0;
+  text-decoration: none;
+}
 .food-result {
   margin-top: 35px;
 }

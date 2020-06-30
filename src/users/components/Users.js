@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import { NavLink } from "react-router-dom";
 import {
   Grid,
   RadioGroup,
@@ -187,7 +188,10 @@ const Users = () => {
           <div className="food-recommender">
             <Grid item xs={4}>
               <p>
-                <u>User Details:</u>
+                <u>User Details: </u>
+                <span>
+                  <NavLink to="/profile">(Edit)</NavLink>
+                </span>
               </p>
               <p>Age: {userProfileInfo.age}</p>
               <p>Gender: {userProfileInfo.gender}</p>
