@@ -18,7 +18,7 @@ const AvoidFoodTable = ({ avoidableFoods }) => {
           <Table aria-label="simple table">
             <TableHead className="avoid-table-head">
               <TableRow>
-                <TableCell>Food</TableCell>
+                <TableCell>Foods(100gm)</TableCell>
                 <TableCell align="right">Calories</TableCell>
                 <TableCell align="right">Category</TableCell>
                 <TableCell align="right">Fat&nbsp;(g)</TableCell>

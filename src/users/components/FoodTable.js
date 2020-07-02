@@ -41,7 +41,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
       id: "name",
       numeric: false,
       disablePadding: true,
-      label: "Recommended Foods",
+      label: "Recommended Foods(100gm)",
     },
     { id: "category", numeric: false, disablePadding: true, label: "Category" },
     { id: "calories", numeric: true, disablePadding: false, label: "Calories" },
@@ -292,7 +292,7 @@ const FoodTable = ({ sgstdFoods, BMR }) => {
               <Table aria-label="simple table" size="small">
                 <TableHead className="table-head">
                   <TableRow>
-                    <TableCell>Food</TableCell>
+                    <TableCell>Foods(100gm)</TableCell>
                     <TableCell align="right">BMR({BMR}±50)</TableCell>
                   </TableRow>
                 </TableHead>
